@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hành Trình Kỷ Niệm</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #ff4d6d;
+        --bg: #fff5f7;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        font-family: "Quicksand", sans-serif;
+        overflow: hidden;
+      }
+
+      .phase {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        width: 100vw;
+        position: fixed;
+        inset: 0;
+        padding: 20px;
+        transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .hidden {
+        opacity: 0;
+        pointer-events: none;
+        transform: scale(0.9);
+      }
+
+      h1 {
+        font-family: "Dancing Script", cursive;
+        color: var(--primary);
+        font-size: 3rem;
+        margin-bottom: 10px;
+      }
+
+      /* --- NÚT BẤM --- */
+      .btn {
+        padding: 15px 40px;
+        border-radius: 50px;
+        border: none;
+        font-weight: bold;
+        cursor: pointer;
+        background: var(--primary);
+        color: white;
+        transition: 0.3s;
+        box-shadow: 0 10px 20px rgba(255, 77, 109, 0.3);
+      }
+      .btn:hover {
+        transform: scale(1.05);
+      }
+
+      /* --- MÀN 1: POLAROID LỚN & TÂM SỰ --- */
+      #memory-modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.9);
+        display: none;
+        z-index: 2000;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(10px);
+      }
+      .polaroid-large {
+        background: white;
+        padding: 20px 20px 50px;
+        width: 90%;
+        max-width: 450px;
+        transform: rotate(-1deg);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+        animation: slideUp 0.5s ease-out;
+      }
+      .polaroid-large img {
+        width: 100%;
+        height: 350px;
+        object-fit: cover;
+        border-radius: 4px;
+      }
+      .polaroid-text {
+        font-family: "Dancing Script", cursive;
+        font-size: 1.8rem;
+        margin-top: 25px;
+        color: #333;
+        line-height: 1.4;
+        padding: 0 10px;
+      }
+
+      /* --- MÀN 2: THIỆP MỜI 2 BÊN --- */
+      .invitation-container {
+        display: flex;
+        background: white;
+        border-radius: 25px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        width: 100%;
+        max-width: 900px;
+        min-height: 500px;
+      }
+      .invitation-left {
+        flex: 1.3;
+        background: #fafafa;
+        border-right: 1px solid #eee;
+      }
+      .slideshow-container {
+        height: 350px;
+        position: relative;
+      }
+      .mySlides img {
+        width: 100%;
+        height: 350px;
+        object-fit: cover;
+      }
+      .invitation-right {
+        flex: 1;
+        padding: 40px;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .info-item {
+        text-decoration: none;
+        color: inherit;
+        margin-bottom: 20px;
+        display: block;
+      }
+      .info-item b {
+        color: var(--primary);
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      /* --- MÀN 3: HỘP QUÀ --- */
+      .gift-instruction {
+        font-size: 1.4rem;
+        color: var(--primary);
+        margin-bottom: 30px;
+        animation: pulse 1.5s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.7;
+          transform: scale(1.05);
+        }
+      }
+
+      /* --- HIỆU ỨNG PHÁO HOA TIM --- */
+      .explosion-heart {
+        position: fixed;
+        pointer-events: none;
+        z-index: 9999;
+        animation: explode 1.2s ease-out forwards;
+      }
+      @keyframes explode {
+        0% {
+          transform: translate(-50%, -50%) scale(0);
+          opacity: 1;
+        }
+        100% {
+          transform: translate(var(--tx), var(--ty)) scale(1.2);
+          opacity: 0;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .invitation-container {
+          flex-direction: column;
+          max-width: 380px;
+          height: auto;
+        }
+        .phase {
+          overflow-y: auto;
+          justify-content: flex-start;
+          padding-top: 40px;
+        }
+        .polaroid-large img {
+          height: 280px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="phase0" class="phase">
+      <h1>Gửi Em iuu... ❤️</h1>
+      <p>Anh có điều bất ngờ dành cho Em nè. Xem nhé?</p>
+      <div
+        style="margin-top: 20px; position: relative; display: flex; gap: 20px"
+      >
+        <button class="btn" onclick="nextPhase(1)">Đồng ý luôn ❤️</button>
+        <button id="noBtn" class="btn" style="background: #adb5bd">
+          Hông nha 😜
+        </button>
+      </div>
+    </div>
+
+    <div id="phase1" class="phase hidden">
+      <h1>Ký Ức ✨</h1>
+      <p>Chạm vào những trái tim đang bay để lắng nghe anh nói...</p>
+      <div
+        id="progress"
+        style="font-weight: bold; color: var(--primary); font-size: 1.5rem"
+      >
+        0 / 5
+      </div>
+    </div>
+
+    <div id="phase2" class="phase hidden">
+      <div class="invitation-container">
+        <div class="invitation-left">
+          <div class="slideshow-container">
+            <div class="mySlides"><img src="quan-1.jpg" /></div>
+            <div class="mySlides"><img src="quan-2.jpg" /></div>
+            <button
+              style="position: absolute; left: 10px; top: 50%"
+              onclick="plusSlides(-1)"
+            >
+              ❮
+            </button>
+            <button
+              style="position: absolute; right: 10px; top: 50%"
+              onclick="plusSlides(1)"
+            >
+              ❯
+            </button>
+          </div>
+          <div
+            style="
+              padding: 20px;
+              font-size: 0.9rem;
+              color: #666;
+              font-style: italic;
+              text-align: left;
+            "
+          >
+            "Quán này có không gian ngoài trời rất thoáng, nhạc lofi chill
+            chill. Tớ nghĩ cậu sẽ thích góc ngồi cạnh cửa sổ ở đây."
+          </div>
+        </div>
+        <div class="invitation-right">
+          <a href="https://maps.google.com" target="_blank" class="info-item">
+            <b>📍 Địa điểm (Nhấn để xem đường đi)</b>
+            Tiệm Cà Phê De L'Amour - Quận 1
+          </a>
+          <div class="info-item">
+            <b>⏰ Thời gian</b> 18h30 - Thứ 7 tuần này❤️
+          </div>
+          <div class="info-item">
+            <b>👗 Dresscode</b> Em mặc gì cũng đẹp hết💕! Tối nay anh cũng sẽ
+            cởi hết thuiii
+          </div>
+          <div
+            style="
+              font-family: &quot;Dancing Script&quot;;
+              font-size: 1.6rem;
+              color: #333;
+              margin-top: 15px;
+              border-top: 1px dashed #ccc;
+              pt: 15px;
+            "
+          >
+            "Anh đã rất mong chờ được đi hẹn hò cùng Em đêm nay. Em yêu đi cùng
+            Anh nhé?"
+          </div>
+        </div>
+      </div>
+      <button class="btn" style="margin-top: 25px" onclick="nextPhase(3)">
+        Em đồng ý nhận thiệp ❤️
+      </button>
+    </div>
+
+    <div id="phase3" class="phase hidden">
+      <div class="gift-instruction">Chưa hết đâu. Hãy mở hộp ra đi✨</div>
+      <div
+        style="
+          font-size: 120px;
+          cursor: pointer;
+          animation: bounce 1.5s infinite;
+        "
+        onclick="openGift()"
+      >
+        🎁
+      </div>
+    </div>
+
+    <div id="phase4" class="phase hidden">
+      <h1 style="font-family: &quot;Dancing Script&quot;">
+        Đã để em đợi lâuu ❤️
+      </h1>
+      <div
+        style="
+          background: white;
+          padding: 15px;
+          border-radius: 20px;
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+          width: 90%;
+          max-width: 400px;
+        "
+      >
+        <img src="lac.png" style="width: 100%; border-radius: 15px" />
+        <p
+          style="
+            font-family: &quot;Dancing Script&quot;;
+            font-size: 1.8rem;
+            margin-top: 15px;
+            color: var(--primary);
+          "
+        >
+          Mãi yêu em!
+        </p>
+      </div>
+    </div>
+
+    <div id="memory-modal" onclick="closeModal()">
+      <div class="polaroid-large" onclick="event.stopPropagation()">
+        <img src="" id="modal-img" />
+        <div class="polaroid-text" id="modal-text"></div>
+      </div>
+    </div>
+
+    <script>
+      const memories = [
+        {
+          img: "3.jpg",
+          text: "Nhìn lại hành trình mà chúng ta đã đi qua cùng nhau, đó thật sự là quãng đường dài. Nhờ vào những ngày đi gym mà ta gần nhau hơn. Nhưng đó là lúc anh đã bắt đầu thích em khi nào mà không hay. Người mà anh còn không nghĩ sẽ đi cùng anh xa đến vậy.",
+        },
+        {
+          img: "7.jpg",
+          text: "Anh đã trải qua rất nhiều điều cùng em và có cùng nhau rất nhiều kỷ niệm đáng nhớ. Từ buổi hẹn hò đầu tiên là anh biết em đã cho anh cơ hội để được bên em, dù tương lai phía trước của mình không hề có hi vọng...",
+        },
+        {
+          img: "2.jpg",
+          text: '...Trong quá trình "mập mờ" và đến khi ở bên nhau. Ta có những lần tưởng trừng dừng lại nhưng rồi lại tiếp tục. Anh biết em đã chịu đựng rất nhiều điều tồi tệ và nhiều thiệt thòi khi quen người như anh. Nhưng sâu bên trong anh vẫn luôn muốn cố gắng cho em những điều tốt nhất có thể. ',
+        },
+        {
+          img: "5.jpg",
+          text: "Có thể em để ý hoặc không nhưng anh vẫn luôn thầm lặng yêu em từng ngày. Anh luôn muốn được chăm sóc và bảo vệ em, dù cho có chuyện gì xảy ra đi nữa. Anh biết anh không hoàn hảo, anh có rất nhiều khuyết điểm và những điều chưa tốt. Nhưng anh vẫn luôn mong muốn được cùng em vượt qua tất cả để xây dựng một tương lai thật đẹp đẽ bên nhau.",
+        },
+        {
+          img: "1.jpg",
+          text: "Cảm ơn em vì đã quay lại bên anh. Đây sẽ là lần cuối anh để em rời đi",
+        },
+      ];
+
+      let clickCount = 0;
+      let slideIndex = 1;
+
+      // --- NÚT TỪ CHỐI NHẢY LUNG TUNG ---
+      const noBtn = document.getElementById("noBtn");
+      noBtn.addEventListener("mouseover", () => {
+        const x = Math.random() * (window.innerWidth - 120);
+        const y = Math.random() * (window.innerHeight - 50);
+        noBtn.style.position = "fixed";
+        noBtn.style.left = x + "px";
+        noBtn.style.top = y + "px";
+      });
+
+      function nextPhase(p) {
+        document
+          .querySelectorAll(".phase")
+          .forEach((el) => el.classList.add("hidden"));
+        document.getElementById(`phase${p}`).classList.remove("hidden");
+        if (p === 1) startHearts();
+        if (p === 2) showSlides(1);
+      }
+
+      function startHearts() {
+        const int = setInterval(() => {
+          if (clickCount >= 5) {
+            clearInterval(int);
+            return;
+          }
+          const h = document.createElement("div");
+          h.innerHTML = "❤️";
+          h.style.cssText = `position:fixed; bottom:-50px; left:${Math.random() * 90}vw; font-size:50px; cursor:pointer; animation: fly 7s linear forwards;`;
+          h.onclick = () => {
+            document.getElementById("modal-img").src = memories[clickCount].img;
+            document.getElementById("modal-text").innerText =
+              memories[clickCount].text;
+            document.getElementById("memory-modal").style.display = "flex";
+            clickCount++;
+            document.getElementById("progress").innerText = `${clickCount} / 5`;
+          };
+          document.body.appendChild(h);
+        }, 1000);
+      }
+
+      function closeModal() {
+        document.getElementById("memory-modal").style.display = "none";
+        if (clickCount >= 5) setTimeout(() => nextPhase(2), 800);
+      }
+
+      function openGift() {
+        for (let i = 0; i < 40; i++) {
+          const h = document.createElement("div");
+          h.className = "explosion-heart";
+          h.innerHTML = "❤️";
+          h.style.left = "50vw";
+          h.style.top = "50vh";
+          h.style.setProperty("--tx", `${(Math.random() - 0.5) * 500}px`);
+          h.style.setProperty("--ty", `${(Math.random() - 0.5) * 500}px`);
+          document.body.appendChild(h);
+        }
+        setTimeout(() => nextPhase(4), 1000);
+      }
+
+      function plusSlides(n) {
+        showSlides((slideIndex += n));
+      }
+      function showSlides(n) {
+        let s = document.getElementsByClassName("mySlides");
+        if (n > s.length) slideIndex = 1;
+        if (n < 1) slideIndex = s.length;
+        for (let i = 0; i < s.length; i++) s[i].style.display = "none";
+        s[slideIndex - 1].style.display = "block";
+      }
+
+      const s = document.createElement("style");
+      s.innerText = `@keyframes fly { to { transform: translateY(-110vh) rotate(360deg); } }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        @keyframes slideUp { from { transform: translateY(100px) rotate(5deg); opacity: 0; } to { transform: translateY(0) rotate(-1deg); opacity: 1; } }`;
+      document.head.appendChild(s);
+    </script>
+  </body>
+</html>
