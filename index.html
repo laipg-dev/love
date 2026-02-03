@@ -230,8 +230,9 @@
       <div class="invitation-container">
         <div class="invitation-left">
           <div class="slideshow-container">
-            <div class="mySlides"><img src="quan-1.jpg" /></div>
-            <div class="mySlides"><img src="quan-2.jpg" /></div>
+            <div class="mySlides"><img src="8.jpg" /></div>
+            <div class="mySlides"><img src="9.jpg" /></div>
+            <div class="mySlides"><img src="10.jpg" /></div>
             <button
               style="position: absolute; left: 10px; top: 50%"
               onclick="plusSlides(-1)"
@@ -254,21 +255,27 @@
               text-align: left;
             "
           >
-            "Quán này có không gian ngoài trời rất thoáng, nhạc lofi chill
-            chill. Tớ nghĩ cậu sẽ thích góc ngồi cạnh cửa sổ ở đây."
+            "Một không gian Rooftop mở thoáng đãng với vibe nhạc lo-fi nhẹ nhàng
+            và hiện đại. Đây là nơi cực kỳ lý tưởng để chúng mình 'chill' cùng
+            nhau, thưởng thức những ly Cocktail Signature và những món ăn Á-Âu
+            tinh tế."
           </div>
         </div>
         <div class="invitation-right">
-          <a href="https://maps.google.com" target="_blank" class="info-item">
+          <a
+            href="https://maps.app.goo.gl/FrF2DXGkY9TnABzw9"
+            target="_blank"
+            class="info-item"
+          >
             <b>📍 Địa điểm (Nhấn để xem đường đi)</b>
-            Tiệm Cà Phê De L'Amour - Quận 1
+            Cloud Twelve Kitchen Bar
           </a>
           <div class="info-item">
             <b>⏰ Thời gian</b> 18h30 - Thứ 7 tuần này❤️
           </div>
           <div class="info-item">
             <b>👗 Dresscode</b> Em mặc gì cũng đẹp hết💕! Tối nay anh cũng sẽ
-            cởi hết thuiii
+            cởi hết thuiii.😍
           </div>
           <div
             style="
@@ -280,8 +287,9 @@
               pt: 15px;
             "
           >
-            "Anh đã rất mong chờ được đi hẹn hò cùng Em đêm nay. Em yêu đi cùng
-            Anh nhé?"
+            Anh muốn cùng em tận hưởng một buổi tối 'đáng chill' nhất, nơi không
+            gian và âm nhạc hòa quyện để chúng ta có thể thoải mái tâm sự. Em
+            đồng ý đi cùng Anh chứ?
           </div>
         </div>
       </div>
@@ -412,6 +420,13 @@
       }
 
       function openGift() {
+        const music = document.getElementById("giftMusic");
+        music.play(); // Kích hoạt phát nhạc
+
+        const box = document.getElementById("gift-box");
+        box.style.transform = "scale(0)";
+
+        // Hiệu ứng pháo hoa tim (giữ nguyên code cũ của bạn)
         for (let i = 0; i < 40; i++) {
           const h = document.createElement("div");
           h.className = "explosion-heart";
@@ -443,4 +458,7 @@
       document.head.appendChild(s);
     </script>
   </body>
+  <audio id="giftMusic">
+    <source src="nhac-mo-qua.mp3" type="audio/mpeg" />
+  </audio>
 </html>
