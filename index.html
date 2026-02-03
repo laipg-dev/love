@@ -420,13 +420,6 @@
       }
 
       function openGift() {
-        const music = document.getElementById("giftMusic");
-        music.play(); // Kích hoạt phát nhạc
-
-        const box = document.getElementById("gift-box");
-        box.style.transform = "scale(0)";
-
-        // Hiệu ứng pháo hoa tim (giữ nguyên code cũ của bạn)
         for (let i = 0; i < 40; i++) {
           const h = document.createElement("div");
           h.className = "explosion-heart";
@@ -458,7 +451,4 @@
       document.head.appendChild(s);
     </script>
   </body>
-  <audio id="giftMusic">
-    <source src="nhac-mo-qua.mp3" type="audio/mpeg" />
-  </audio>
 </html>
